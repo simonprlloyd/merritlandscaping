@@ -582,6 +582,50 @@
     font-family: 'Oswald', sans-serif; font-weight: 500;
     letter-spacing: .28em; text-transform: uppercase;
     font-size: 12px; margin-bottom: 16px; color: var(--ink-mute);
+    display: inline-flex; align-items: center; gap: 14px;
+    justify-content: center;
+  }
+  /* small flag accent next to "Proudly Serving" */
+  .flag-accent {
+    display: inline-block;
+    width: 28px; height: 18px;
+    border: 1px solid rgba(0,0,0,.15);
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    background:
+      /* stripes */
+      linear-gradient(to bottom,
+        var(--red) 0 14.28%,
+        #fff 14.28% 28.56%,
+        var(--red) 28.56% 42.84%,
+        #fff 42.84% 57.12%,
+        var(--red) 57.12% 71.4%,
+        #fff 71.4% 85.68%,
+        var(--red) 85.68% 100%);
+  }
+  .flag-accent::before {
+    content: ""; position: absolute;
+    top: 0; left: 0;
+    width: 44%; height: 53%;
+    background: var(--blue);
+  }
+  /* tiny star dots in canton */
+  .flag-accent::after {
+    content: ""; position: absolute;
+    top: 2px; left: 2px;
+    width: 9px; height: 7px;
+    background-image:
+      radial-gradient(circle, #fff 0.5px, transparent 0.6px),
+      radial-gradient(circle, #fff 0.5px, transparent 0.6px),
+      radial-gradient(circle, #fff 0.5px, transparent 0.6px),
+      radial-gradient(circle, #fff 0.5px, transparent 0.6px),
+      radial-gradient(circle, #fff 0.5px, transparent 0.6px),
+      radial-gradient(circle, #fff 0.5px, transparent 0.6px);
+    background-size: 3px 3px;
+    background-position: 0 0, 1.5px 1.5px, 3px 0, 4.5px 1.5px, 6px 0, 7.5px 1.5px;
+    background-repeat: no-repeat;
   }
   .service-area .cities {
     font-family: 'Oswald', sans-serif; font-weight: 500;
@@ -1065,15 +1109,71 @@
     font-size: 11px; color: var(--paper-mute); flex-wrap: wrap; gap: 16px;
   }
   .footer-bottom .flag {
-    display: inline-block; width: 20px; height: 12px;
-    background: linear-gradient(to bottom,
-      var(--red) 0 25%, var(--paper) 25% 50%,
-      var(--red) 50% 75%, var(--paper) 75% 100%);
-    position: relative; vertical-align: middle; margin-right: 10px;
+    display: inline-block;
+    width: 44px; height: 28px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,.15);
+    box-shadow: 0 4px 12px rgba(0,0,0,.4);
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle; margin-right: 14px;
+    background:
+      /* 13 stripes — red top, alternating */
+      linear-gradient(to bottom,
+        var(--red) 0 7.69%,
+        #f4efe4 7.69% 15.38%,
+        var(--red) 15.38% 23.07%,
+        #f4efe4 23.07% 30.76%,
+        var(--red) 30.76% 38.45%,
+        #f4efe4 38.45% 46.14%,
+        var(--red) 46.14% 53.83%,
+        #f4efe4 53.83% 61.52%,
+        var(--red) 61.52% 69.21%,
+        #f4efe4 69.21% 76.9%,
+        var(--red) 76.9% 84.59%,
+        #f4efe4 84.59% 92.28%,
+        var(--red) 92.28% 100%);
+    animation: flag-wave 4s ease-in-out infinite;
+  }
+  @keyframes flag-wave {
+    0%, 100% { transform: skewY(0deg) scale(1); }
+    50% { transform: skewY(-1.5deg) scale(1.02); }
   }
   .footer-bottom .flag::before {
-    content: ""; position: absolute; top: 0; left: 0;
-    width: 40%; height: 50%; background: var(--blue);
+    content: ""; position: absolute;
+    top: 0; left: 0;
+    width: 42%; height: 53.83%;
+    background: var(--blue);
+    z-index: 1;
+  }
+  /* stars in canton — using radial gradient grid */
+  .footer-bottom .flag::after {
+    content: ""; position: absolute;
+    top: 2px; left: 2px;
+    width: calc(42% - 4px); height: calc(53.83% - 4px);
+    z-index: 2;
+    background-image:
+      radial-gradient(circle, #fff .8px, transparent 1px),
+      radial-gradient(circle, #fff .8px, transparent 1px);
+    background-size: 4px 3.5px, 4px 3.5px;
+    background-position: 0 0, 2px 1.75px;
+  }
+  .footer-bottom .locally-owned {
+    display: inline-flex;
+    align-items: center;
+  }
+  .footer-bottom .locally-owned .label {
+    display: flex; flex-direction: column;
+    line-height: 1.4; gap: 2px;
+  }
+  .footer-bottom .locally-owned .label .main {
+    font-weight: 700; color: var(--paper);
+    letter-spacing: .18em;
+  }
+  .footer-bottom .locally-owned .label .sub {
+    font-size: 9.5px;
+    color: var(--paper-mute);
+    letter-spacing: .15em;
   }
 
   /* ============ AI CHATBOT — refined ============ */
@@ -1554,7 +1654,7 @@
 </div>
 
 <div class="service-area">
-  <h2>Proudly Serving the Jackson Metro</h2>
+  <h2><span class="flag-accent" aria-hidden="true"></span> Proudly Serving the Jackson Metro <span class="flag-accent" aria-hidden="true"></span></h2>
   <p class="cities">
     Flowood <span class="sep">·</span> Brandon <span class="sep">·</span> Pearl <span class="sep">·</span> Jackson <span class="sep">·</span> Madison <span class="sep">·</span> Ridgeland <span class="sep">·</span> Richland
     <br><span class="secondary">Rankin County · Hinds County</span>
@@ -1821,7 +1921,13 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <div><span class="flag"></span> Locally Owned · Flowood, Mississippi</div>
+    <div class="locally-owned">
+      <span class="flag" aria-hidden="true"></span>
+      <span class="label">
+        <span class="main">Proudly Locally Owned</span>
+        <span class="sub">Flowood, Mississippi · USA</span>
+      </span>
+    </div>
     <div>© 2026 Merritt Lawn Co. · All Rights Reserved</div>
   </div>
 </footer>
